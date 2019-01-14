@@ -332,7 +332,7 @@ def multinomial(logits, num_samples, seed=None, name=None, output_dtype=None):
   # probability.
   samples = tf.multinomial(tf.log([[10., 10.]]), 5)
   ```
-
+  
   Args:
     logits: 2-D Tensor with shape `[batch_size, num_classes]`.  Each slice
       `[i, :]` represents the unnormalized log-probabilities for all classes.
@@ -346,7 +346,10 @@ def multinomial(logits, num_samples, seed=None, name=None, output_dtype=None):
 
   Returns:
     The drawn samples of shape `[batch_size, num_samples]`.
+    
+    The return values may be out-of-range if the provided logits are too larges or too small.
   """
+  
   with ops.name_scope(name, "multinomial", [logits]):
     logits = ops.convert_to_tensor(logits, name="logits")
     seed1, seed2 = random_seed.get_seed(seed)
